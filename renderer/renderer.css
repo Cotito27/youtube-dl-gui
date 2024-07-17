@@ -434,6 +434,11 @@ option.audio {
     color: var(--font-color);
 }
 
+.modal-content textarea.header-value {
+    color: #495057;
+    background-color: #fff;
+}
+
 .modal-title {
     text-overflow: ellipsis;
     overflow: hidden;

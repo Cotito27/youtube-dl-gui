@@ -215,6 +215,16 @@ async function init() {
         });
     })
 
+    $('#btn-add-header').on('click', () => {
+        const myTemplate = $("#template-headers-settings").html().trim();
+        const myTemplateClone = $(myTemplate);
+        $('#headersSetting').append(myTemplateClone);
+    });
+
+    $('#headersSetting').on('click', '.btn-remove-header', function() {
+        $(this).closest('.header-item').remove();
+    });
+
     $('#authBtn').on('click', () => {
         $('#authModal').modal("show");
     })
@@ -990,6 +1000,14 @@ async function getSettings() {
     $('#noPlaylist').prop('checked', settings.noPlaylist);
     $('#globalShortcut').prop('checked', settings.globalShortcut);
     $('#ratelimitSetting').val(settings.rateLimit);
+    $("#headersSetting").empty();
+    for(const header of settings.headers) {
+        const myTemplate = $("#template-headers-settings").html().trim();
+        const myTemplateClone = $(myTemplate);
+        myTemplateClone.find('.header-key').val(header.key);
+        myTemplateClone.find('.header-value').val(header.value);
+        myTemplateClone.appendTo("#headersSetting");
+    }
     $('#proxySetting').val(settings.proxy);
     $('#nameFormatCustom').val(settings.nameFormat).prop("disabled", settings.nameFormatMode === "custom");
     $('#nameFormat').val(settings.nameFormatMode);
@@ -1016,6 +1034,16 @@ async function getSettings() {
 }
 
 function sendSettings() {
+    const headers = [];
+
+    $('#headersSetting').find('.header-item').each(function() {
+        const key = $(this).find('.header-key').val();
+        const value = $(this).find('.header-value').val();
+        if(key && value) {
+            headers.push({key: key, value: value});
+        }
+    });
+
     let settings = {
         updateBinary: $('#updateBinary').prop('checked'),
         updateApplication: $('#updateApplication').prop('checked'),
@@ -1024,6 +1052,7 @@ function sendSettings() {
         globalShortcut: $('#globalShortcut').prop('checked'),
         outputFormat: $('#outputFormat').val(),
         audioOutputFormat: $('#audioOutputFormat').val(),
+        headers,
         proxy: $('#proxySetting').val(),
         userAgent: $('#userAgent').val(),
         validateCertificate: $('#validateCertificate').prop('checked'),

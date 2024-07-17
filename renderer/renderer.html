@@ -333,6 +333,34 @@
                 <hr/>
                 <h3>Network</h3>
                 <div class="mb-4">
+                    <label for="headersSetting" class="form-label">Custom Headers</label>
+                    <div>
+                        <div id="headersSetting">
+                           
+                        </div>
+                        <template id="template-headers-settings">
+                            <div class="header-item">
+                                <div>
+                                    <div class="form-group">
+                                        <input class="form-control header-key" type="text" value="" placeholder="Key">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea style="min-height: 100px;" class="form-control header-value" placeholder="Value"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group col-remove">
+                                    <button type="button"
+                                        class="btn btn-danger btn-remove-header">Remove</button>
+                                </div>
+                                <hr style="border-color: gray;" />
+                            </div>
+                        </template>
+                        <div>
+                            <button id="btn-add-header" type="button" class="btn btn-dark">Add new header</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
                     <label for="proxySetting" class="form-label">Proxy (if empty no proxy will be used)</label>
                     <input id="proxySetting" class="form-control" type="text" value="" placeholder="HTTPS/SOCKS proxy URL">
                 </div>

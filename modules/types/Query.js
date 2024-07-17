@@ -21,6 +21,13 @@ class Query {
         args.push("--no-cache-dir");
         args.push("--ignore-config");
 
+        if(this.environment.settings.headers) {
+            this.environment.settings.headers.forEach(header => {
+                args.push("--add-header");
+                args.push(`${header.key}:${header.value}`);
+            });
+        }
+
         if(this.environment.settings.userAgent === "spoof") {
             args.push("--user-agent"); //Add random user agent to slow down user agent profiling
             args.push(new UserAgent({ deviceCategory: 'desktop' }).toString());

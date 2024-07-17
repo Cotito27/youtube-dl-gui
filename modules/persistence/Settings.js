@@ -4,8 +4,7 @@ const fs = require("fs").promises;
 
 class Settings {
     constructor(
-        paths, env, outputFormat, audioOutputFormat, downloadPath,
-        proxy, rateLimit, autoFillClipboard, noPlaylist, globalShortcut, userAgent,
+        paths, env, outputFormat, audioOutputFormat, downloadPath, headers, proxy, rateLimit, autoFillClipboard, noPlaylist, globalShortcut, userAgent,
         validateCertificate, enableEncoding, taskList, nameFormat, nameFormatMode,
         sizeMode, splitMode, maxConcurrent, retries, fileAccessRetries, updateBinary, downloadType, updateApplication, cookiePath,
         statSend, sponsorblockMark, sponsorblockRemove, sponsorblockApi, downloadMetadata, downloadJsonMetadata,
@@ -16,6 +15,7 @@ class Settings {
         this.outputFormat = outputFormat == null ? "none" : outputFormat;
         this.audioOutputFormat = audioOutputFormat == null ? "none" : audioOutputFormat;
         this.downloadPath = downloadPath == null ? env.app.getPath("downloads") : downloadPath;
+        this.headers = headers || [];
         this.proxy = proxy == null ? "" : proxy;
         this.rateLimit = rateLimit == null ? "" : rateLimit;
         this.autoFillClipboard = autoFillClipboard == null ? true : autoFillClipboard;
@@ -71,6 +71,7 @@ class Settings {
                 data.outputFormat,
                 data.audioOutputFormat,
                 data.downloadPath,
+                data.headers,
                 data.proxy,
                 data.rateLimit,
                 data.autoFillClipboard,
@@ -115,6 +116,7 @@ class Settings {
     update(settings) {
         this.outputFormat = settings.outputFormat;
         this.audioOutputFormat = settings.audioOutputFormat;
+        this.headers = settings.headers;
         this.proxy = settings.proxy;
         this.rateLimit = settings.rateLimit;
         this.autoFillClipboard = settings.autoFillClipboard;
@@ -159,6 +161,7 @@ class Settings {
             outputFormat: this.outputFormat,
             audioOutputFormat: this.audioOutputFormat,
             downloadPath: this.downloadPath,
+            headers: this.headers,
             proxy: this.proxy,
             rateLimit: this.rateLimit,
             autoFillClipboard: this.autoFillClipboard,
